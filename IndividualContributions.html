@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</head>
+<style>
+
+    .tooltip{
+        position      : absolute;
+        text-align    : center;
+        max-width     : 110px;
+        max-height    : 80px;
+        padding       : 8px;
+        border        : none;
+        border-radius : 8px;
+        margin-top    : -30px;
+        font          : 10px sans-serif;
+        background    :lightsteelblue;
+        pointer-events: none;
+    }
+    .pagination > li > a
+    {
+    background-color: #41A6F9;
+    color: white;
+    }
+</style>
+<html>
+    <h2 style="text-align:center;font-family:verdana;">Gerrit Changes Analysis of Named Data Networking Project</h1>
+    <br>
+    <h3 style="text-align:center;font-family:courier;">Individual Contributions<br>by projects</h2>
+    <br>
+    <br>
+    <body style="background-color:#FAFBFC;">
+         <!-- Buttons for different projects -->
+        <button type="button" class="btn btn-outline-info pull-right" style="margin-left:50px;" onclick="update('NFD')">NFD</button>
+        <button type="button" class="btn btn-outline-info" onclick="update('NLSR')">NLSR</button>
+        <button type="button" class="btn btn-outline-info" onclick="update('ndncxx')">ndn-cxx</button>
+        
+         <div id="my_dataviz"></div>
+         <script>
+             // set the dimensions and margins of the graph
+             var margin = {top: 30, right: 30, bottom: 70, left: 60},
+                 width = 800 - margin.left - margin.right,
+                 height = 400 - margin.top - margin.bottom;
+             
+             // append the svg object to the body of the page
+             var svg = d3.select("#my_dataviz")
+             .append("svg")
+                 .attr("width", width + margin.left + margin.right)
+                 .attr("height", height + margin.top + margin.bottom)
+             .append("g")
+                 .attr("transform",
+                     "translate(" + margin.left + "," + margin.top + ")");
+             
+             // X axis
+             var x = d3.scaleBand()
+             .range([ 0, width ])
+             .padding(0.2);
+             var xAxis = svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+
+            // text label for the x axis
+            svg.append("text")             
+            .attr("transform",
+                    "translate(" + (width/2) + " ," + 
+                                (height + margin.top + 20) + ")")
+            .style("text-anchor", "middle")
+            .text("ID of Person");
+             
+             // Add Y axis
+             var y = d3.scaleLinear()
+                .range([ height, 0]);
+             var yAxis = svg.append("g")
+                .attr("class", "myYaxis")
+
+              // text label for the y axis
+            svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x",0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Changes submitted");  
+             
+             // Update graph for the choosen projects
+            function update(selectedVar) {
+                if(selectedVar=="NFD"){
+                    // Parse the Data
+                    d3.csv("IndividualContributionsNFD.csv", function(data) {
+        
+                        // X axis
+                        x.domain(data.map(function(d) { return d.ID; }))
+                        xAxis.transition().duration(1000).call(d3.axisBottom(x))
+            
+                        // Add Y axis
+                        y.domain([0, d3.max(data, function(d) { return +d.NFD }) ]);
+                        yAxis.transition().duration(1000).call(d3.axisLeft(y));
+            
+                        //tooltip
+                        var tooltip = d3.select("#my_dataviz")
+                        .append("div")
+                        .style("opacity", 0)
+                        .attr("class", "tooltip")
+                        .style("padding", "10px")
+            
+                        //functions that change the tooltip when user hover / move / leave 
+                        var mouseover = function(d) {
+                        tooltip
+                            .html("Person ID: " + d.ID + "<br>" + "Changes: " + d.NFD + "<br>" + "Total Changes in all projects:" + "<br>" + d.TotalChanges)
+                            .style("opacity", 0.9)
+                        }
+                        var mousemove = function(d) {
+                        tooltip
+                            .style("left", (d3.mouse(this)[0]) + "px") 
+                            .style("top", (d3.mouse(this)[1]) + "px")
+                        }
+                        var mouseleave = function(d) {
+                        tooltip
+                            .style("opacity", 0)
+                        }
+            
+                        //map data to existing bars
+                        var u = svg.selectAll("rect")
+                        .data(data)
+            
+                        // Bars
+                        u
+                        .enter()
+                        .append("rect")
+                        .merge(u)
+                        .on("mouseover", mouseover)
+                        .on("mousemove", mousemove)
+                        .on("mouseleave", mouseleave)
+                        .transition()
+                        .duration(1000)
+                        .attr("x", function(d) { return x(d.ID); })
+                        .attr("y", function(d) { return y(d.NFD); })
+                        .attr("width", x.bandwidth())
+                        .attr("height", function(d) { return height - y(d.NFD); })
+                        .attr("fill", "#5DADE2")
+
+                        u
+                        .exit()
+                        .remove()
+                
+                        //Annotations
+                        svg.append("text")
+                            .attr("x", x(136))
+                            .attr("y", y(170))
+                            .text("Not all individuals contributed to all projects")
+                            .style("font-size", "15px")
+                        
+                        svg.append("text")
+                            .attr("x", x(28))
+                            .attr("y", y(150))
+                            .text("Overall maximum changes")
+                            .style("font-size", "15px")
+                        
+                        svg.append("text")
+                        .attr("x", x(28))
+                        .attr("y", y(140))
+                        .text("submitted by ID #1")
+                        .style("font-size", "15px")
+            
+                    })
+        
+                }else if(selectedVar=="NLSR"){
+                    // Parse the Data
+                    d3.csv("IndividualContributionsNLSR.csv", function(data) {
+        
+                        // X axis
+                        x.domain(data.map(function(d) { return d.ID; }))
+                        xAxis.transition().duration(1000).call(d3.axisBottom(x))
+            
+                        // Add Y axis
+                        y.domain([0, d3.max(data, function(d) { return +d.NLSR }) ]);
+                        yAxis.transition().duration(1000).call(d3.axisLeft(y));
+        
+                        var tooltip = d3.select("#my_dataviz")
+                        .append("div")
+                        .style("opacity", 0)
+                        .attr("class", "tooltip")
+                        .style("background-color", "white")
+                        .style("border", "solid")
+                        .style("border-width", "1px")
+                        .style("border-radius", "5px")
+                        .style("padding", "10px")
+        
+                        var mouseover = function(d) {
+                        tooltip
+                            .html("Person ID: " + d.ID + "<br>" + "Changes: " + d.NLSR + "<br>" + "Total Changes in all projects:" + "<br>" + d.TotalChanges)
+                            .style("opacity", 1)
+                        }
+                        var mousemove = function(d) {
+                        tooltip
+                            .style("left", (d3.mouse(this)[0]) + "px") 
+                            .style("top", (d3.mouse(this)[1]) + "px")
+                        }
+                        var mouseleave = function(d) {
+                        tooltip
+                            .style("opacity", 0)
+                        }
+            
+                        //map data to existing bars
+                        var u = svg.selectAll("rect")
+                        .data(data)
+            
+                        // Bars
+                        u
+                        .enter()
+                        .append("rect")
+                        .merge(u)
+                        .on("mouseover", mouseover)
+                        .on("mousemove", mousemove)
+                        .on("mouseleave", mouseleave)
+                        .transition()
+                        .duration(1000)
+                        .attr("x", function(d) { return x(d.ID); })
+                        .attr("y", function(d) { return y(d.NLSR); })
+                        .attr("width", x.bandwidth())
+                        .attr("height", function(d) { return height - y(d.NLSR); })
+                        .attr("fill", "#2E86C1")
+                 
+                        u
+                        .exit()
+                        .remove()
+                })
+            }else{
+                // Parse the Data
+                d3.csv("IndividualContributionsNdn-cxx.csv", function(data) {
+    
+                    // X axis
+                    x.domain(data.map(function(d) { return d.ID; }))
+                    xAxis.transition().duration(1000).call(d3.axisBottom(x))
+        
+                    // Add Y axis
+                    y.domain([0, d3.max(data, function(d) { return +d.ndncxx }) ]);
+                    yAxis.transition().duration(1000).call(d3.axisLeft(y));
+        
+                    var tooltip = d3.select("#my_dataviz")
+                    .append("div")
+                    .style("opacity", 0)
+                    .attr("class", "tooltip")
+                    .style("background-color", "white")
+                    .style("border", "solid")
+                    .style("border-width", "1px")
+                    .style("border-radius", "5px")
+                    .style("padding", "10px")
+    
+                    // function that change the tooltip when user hover / move / leave a cell
+                    var mouseover = function(d) {
+                    tooltip
+                        .html("Person ID: " + d.ID + "<br>" + "Changes: " + d.ndncxx + "<br>" + "Total Changes in all projects:" + "<br>" + d.TotalChanges)
+                        .style("opacity", 1)
+                    }
+                    var mousemove = function(d) {
+                    tooltip
+                        .style("left", (d3.mouse(this)[0]) + "px") 
+                        .style("top", (d3.mouse(this)[1]) + "px")
+                    }
+                    var mouseleave = function(d) {
+                    tooltip
+                        .style("opacity", 0)
+                    }
+                    //map data to existing bars
+                    var u = svg.selectAll("rect")
+                    .data(data)
+        
+                    // Bars
+                    u
+                    .enter()
+                    .append("rect")
+                    .merge(u)
+                    .on("mouseover", mouseover)
+                    .on("mousemove", mousemove)
+                    .on("mouseleave", mouseleave)
+                    .transition()
+                    .duration(1000)
+                    .attr("x", function(d) { return x(d.ID); })
+                    .attr("y", function(d) { return y(d.ndncxx); })
+                    .attr("width", x.bandwidth())
+                    .attr("height", function(d) { return height - y(d.ndncxx); })
+                    .attr("fill", "#21618C")
+                
+                    u
+                    .exit()
+                    .remove()
+                
+                })
+            }
+        }
+        
+        
+        // Initialize graph
+        update('NFD')
+         
+         </script>
+         <script>
+           
+        </script>
+         <div class="container">
+                <ul class="pagination .pagination-lg justify-content-center">
+                  <li class="page-item"><a class="page-link" href="Index.html">Home</a></li>
+                </ul>
+        </div>
+        <p align="center">Most changes were submitted on a monday, and during the 7th hour of the day.</p>
+    </body>
+</html>

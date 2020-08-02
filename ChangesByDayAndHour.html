@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<style> 
+    .line {
+        fill: none;
+        stroke-width: 2px;
+    }
+
+    div.tooltip {
+        position: absolute;
+        text-align: center;
+        width: 140px;
+        height: 50px;
+        padding: 2px;
+        font: 12px sans-serif;
+        background: lightsteelblue;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+    }
+    
+    .pagination > li > a
+    {
+    background-color: #41A6F9;
+    color: white;
+    }
+</style>
+<html>
+    <h2 style="text-align:center;font-family:verdana;">Gerrit Changes Analysis of Named Data Networking Project</h1>
+    <br><h3 style="text-align:center;font-family:courier;">Week Day & Hour</h2>
+    <br>
+    <br>
+    <body style="background-color:#FAFBFC;">
+        <div id="div2" display="none">
+            <div id="my_dataviz" display="none">
+                    <script>
+                        // set the dimensions and margins of the graph
+                        var margin = {top: 10, right: 30, bottom: 40, left: 80},
+                            width = 800 - margin.left - margin.right,
+                            height = 400 - margin.top - margin.bottom;
+                        
+                        // append the svg object to the body of the page
+                        var svg = d3.select("#my_dataviz")
+                        .append("svg")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                        .append("g")
+                            .attr("transform",
+                                "translate(" + margin.left + "," + margin.top + ")");
+                        
+                        // Parse the Data
+                        d3.csv("ChangesByDayAndHour.csv", function(data) {
+                        
+                        //header of the csv files 
+                        var subgroups = data.columns.slice(1)
+                        
+                        // List of groups
+                        var groups = d3.map(data, function(d){return(d.group)}).keys()
+                        
+                        // Add X axis
+                        var x = d3.scaleBand()
+                            .domain(groups)
+                            .range([0, width])
+                            .padding([0.5])
+                        svg.append("g")
+                            .attr("transform", "translate(0," + height + ")")
+                            .call(d3.axisBottom(x).tickSizeOuter(0));
+
+                        // text label for the x axis
+                        svg.append("text")             
+                        .attr("transform",
+                                "translate(" + (width/2) + " ," + 
+                                            (height+8 + margin.top + 20) + ")")
+                        .style("text-anchor", "middle")
+                        .text("Hour of the day");
+                        
+                        // Add Y axis
+                        var y = d3.scaleLinear()
+                            .domain([0, 70])
+                            .range([ height, 0 ]);
+                        svg.append("g")
+                            .call(d3.axisLeft(y));
+
+                        // text label for the y axis
+                        svg.append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 0 - margin.left+20)
+                        .attr("x",0 - (height / 2))
+                        .attr("dy", "1em")
+                        .style("text-anchor", "middle")
+                        .text("Changes submitted");    
+                        
+                        //one color per subgroup
+                        var color = d3.scaleOrdinal()
+                            .domain(subgroups)
+                            .range(['#5DADE2','#EC7063','#58D68D','#A569BD','#F7DC6F','#E59866','#2980B9'])
+                        
+                        //stack per subgroup
+                        var stackedData = d3.stack()
+                            .keys(subgroups)
+                            (data)
+                        
+                        //tooltip
+                        var tooltip = d3.select("#my_dataviz")
+                        .append("div")
+                        .style("opacity", 0)
+                        .attr("class", "tooltip")
+                        .style("padding", "10px")
+                        
+                        // Three function that change the tooltip when user hover / move / leave a cell
+                        var mouseover = function(d) {
+                        var subgroupName = d3.select(this.parentNode).datum().key;
+                        var subgroupValue = d.data[subgroupName];
+                        tooltip
+                            .html("Day: " + subgroupName + "<br>" + "Changes merged: " + subgroupValue)
+                            .style("opacity", .9)
+                        }
+                        var mousemove = function(d) {
+                        tooltip
+                            .style("left", (d3.mouse(this)[0]+90) + "px") 
+                            .style("top", (d3.mouse(this)[1]) + "px")
+                        }
+                        var mouseleave = function(d) {
+                        tooltip
+                            .style("opacity", 0)
+                        }
+                        
+                        // Show the bars
+                        svg.append("g")
+                            .selectAll("g")
+                            // Enter in the stack data 
+                            .data(stackedData)
+                            .enter().append("g")
+                            .attr("fill", function(d) { return color(d.key); })
+                            .selectAll("rect")
+                            // enter a second time 
+                            .data(function(d) { return d; })
+                            .enter().append("rect")
+                                .attr("x", function(d) { return x(d.data.group); })
+                                .attr("y", function(d) { return y(d[1]); })
+                                .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+                                .attr("width",x.bandwidth())
+                                .attr("stroke", "grey")
+                                .on("mouseover", mouseover)
+                                .on("mousemove", mousemove)
+                                .on("mouseleave", mouseleave)
+
+                        svg.append("line")
+                        .attr("x1", x(07))
+                        .attr("y1", y(10))
+                        .attr("x2", x(13))
+                        .attr("y2", y(35))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
+
+                        svg.append("text")
+                            .attr("x", x(13))
+                            .attr("y", y(36))
+                            .text("Highest number of changes submitted")
+                            .style("font-size", "15px")
+                        
+                        svg.append("text")
+                            .attr("x", x(13))
+                            .attr("y", y(32))
+                            .text("on a Monday during 7th Hour")
+                            .style("font-size", "15px")
+
+                        svg.append("text")
+                        .attr("x", x(13))
+                        .attr("y", y(6))
+                        .text("No Changes submitted between 13 and 24 hour")
+                        .style("font-size", "15px")
+                    })
+
+                    svg.append("rect").attr("x",300).attr("y",0).attr("width", 20).attr("height", 20).style("fill", "#5DADE2")
+                    svg.append("rect").attr("x",400).attr("y",0).attr("width", 20).attr("height", 20).style("fill", "#EC7063")
+                    svg.append("rect").attr("x",500).attr("y",0).attr("width", 20).attr("height", 20).style("fill", "#58D68D")
+                    svg.append("rect").attr("x",610).attr("y",0).attr("width", 20).attr("height", 20).style("fill", "#A569BD")
+                    svg.append("rect").attr("x",400).attr("y",30).attr("width", 20).attr("height", 20).style("fill", "#F7DC6F")
+                    svg.append("rect").attr("x",500).attr("y",30).attr("width", 20).attr("height", 20).style("fill", "#E59866")
+                    svg.append("rect").attr("x",610).attr("y",30).attr("width", 20).attr("height", 20).style("fill", "#2980B9")
+                    svg.append("text").attr("x", 325).attr("y",13).text("Monday").style("font-size", "15px").attr("alignment-baseline","middle")
+                    svg.append("text").attr("x", 425).attr("y",13).text("Tuesday").style("font-size", "15px").attr("alignment-baseline","middle")
+                    svg.append("text").attr("x", 525).attr("y",13).text("Wednesday").style("font-size", "15px").attr("alignment-baseline","middle")
+                    svg.append("text").attr("x", 639).attr("y",13).text("Thursday").style("font-size", "15px").attr("alignment-baseline","middle")
+                    svg.append("text").attr("x", 425).attr("y",40).text("Friday").style("font-size", "15px").attr("alignment-baseline","middle")
+                    svg.append("text").attr("x", 525).attr("y",40).text("Saturday").style("font-size", "15px").attr("alignment-baseline","middle")
+                    svg.append("text").attr("x", 639).attr("y",40).text("Sunday").style("font-size", "15px").attr("alignment-baseline","middle")
+
+                </script>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <ul class="pagination .pagination-lg justify-content-center">
+                <li class="page-item"><a class="page-link" href="IndividualContributions.html">Next</a></li>
+            </ul>
+        </div>
+        <p align="center">Most changes were submitted on a monday, and during the 7th hour of the day.</p>
+    </body>
+</html>

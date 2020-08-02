@@ -1,0 +1,136 @@
+﻿Date,NFD,subject,insertions,deletions,total_comment_count,submitter,ndncxx
+23-Jul-20,1,face: remove EndpointId from egress APIs in transport,81,89,11,21,8
+3-Jul-20,1,ci: add Xcode 11.6 and 12 to Travis CI build matrix,7,1,0,21,1
+2-Jul-20,9,fw: remove EndpointId from egress APIs,191,215,42,21,2
+26-Jun-20,2,fw: add test for received Interest with no nonce,19,0,10,5,12
+21-Jun-20,8,table: prevent integer overflow in pit::FaceRecord,39,9,22,5,3
+18-Jun-20,15,fw: Add unsolicited data forwarder counter,36,23,8,1,5
+9-Jun-20,1,face: remove EndpointId from egress APIs,144,153,16,21,1
+9-Jun-20,6,Adjust includes for the updated locations of ndn-cxx security headers,49,56,10,21,3
+31-May-20,2,Rename VERSION to VERSION.info to avoid conflicts with modern STL,3,3,0,1,1
+30-May-20,2,tests: avoid use of deprecated default SigningInfo,1,1,7,1,1
+30-May-20,2,face: Connect faces to the parent (unicast) or associated (multicast) channels,89,29,35,1,12
+16-May-20,1,build: align minimum build dependencies with ndn-cxx,142,461,13,21,1
+22-Apr-20,3,tools: erase all requested entries from CS in nfdc,125,41,20,21,9
+17-Apr-20,1,fw: add HopLimit to strategy documentation,31,30,2,21,5
+15-Apr-20,1,fw: attach PIT token upon CS hit,27,10,1,21,1
+15-Apr-20,2,fw: process HopLimit,125,32,35,5,2
+14-Apr-20,2,ci: set ASan's detect_invalid_pointer_pairs to 2,18,27,0,21,1
+13-Apr-20,1,ci: add CentOS 8 support; drop CentOS 7,20,16,0,21,6
+10-Apr-20,1,common: handle negative unsigneds in config,59,12,28,21,7
+10-Apr-20,4,fw: Minor bug fixes for timeout sensitivity and ignored probes in ASF,22,22,26,21,3
+9-Apr-20,6,tools: create face during nfdc route add,370,106,76,21,4
+8-Apr-20,1,face: use /run/nfd.sock on Linux,19,10,19,21,3
+7-Apr-20,2,"build+docs: switch to python3, refresh FAQ and INSTALL documents",253,344,111,21,7
+2-Apr-20,4,face: handle initially non-running Ethernet interfaces,94,30,21,21,2
+2-Apr-20,7,mgmt+tools: allow MTU overrides on existing faces,320,73,85,21,1
+30-Mar-20,7,face: allow GenericLinkService to override MTU,185,88,103,21,3
+29-Mar-20,19,ci: update Travis configuration,92,88,0,21,1
+13-Mar-20,1,fw+table: use Interest::Nonce instead of uint32_t,53,76,4,21,2
+12-Mar-20,1,rib: fix logic bug in config file validation,8,3,0,21,1
+5-Mar-20,16,face: deduplicate received LpPackets with reliability,281,101,90,21,3
+10-Feb-20,6,face: add logging to LpReliability,51,7,50,21,2
+10-Feb-20,12,face: support runtime MTU changes on Ethernet faces,109,19,29,21,1
+6-Feb-20,8,docs: restructure and update AUTHORS.md,57,78,22,21,1
+21-Jan-20,7,build: upgrade waf to version 2.0.19,11,7,0,21,1
+13-Jan-20,6,Prepare release 0.7.0,54,3,20,1,9
+30-Dec-19,7,tests: avoid deprecated boost headers,48,25,3,21,3
+25-Nov-19,24,Use NDN_CXX_UNREACHABLE where appropriate,20,27,6,21,9
+15-Nov-19,27,mgmt: use a separate validator for prefix announcements,109,29,54,21,2
+8-Nov-19,1,build: pass pkg_config_path to check_cfg() when looking for libndn-cxx,2,3,0,21,17
+7-Nov-19,25,fw: SelfLearningStrategy: check if PIT out-record exists,7,1,8,21,1
+7-Nov-19,20,fw: add processing for afterNewNextHop signal,273,1,72,21,4
+5-Nov-19,26,rib: error out if both localhop_security and auto_prefix_propagate are enabled,90,30,21,21,8
+15-Oct-19,5,mgmt: Enable use of direct fetch in RibManager,101,3,17,1,1
+10-Oct-19,15,ci: upgrade Travis config to Ubuntu 18.04,39,23,0,21,6
+9-Oct-19,11,fw: pull FaceTable construction out of Forwarder class,313,332,2,21,7
+7-Oct-19,5,face: Make congestion marking less aggressive,97,107,49,21,7
+25-Sep-19,29,face+fw: store and return PitToken from downstream,248,38,22,5,4
+24-Sep-19,12,face: increase pcap buffer size,4,0,3,5,136
+23-Sep-19,22,daemon: add missing include,1,0,0,5,1
+14-Sep-19,10,face: add a per face counter for Interests kept by the forwarder,3,2,7,5,2
+12-Sep-19,14,"Revert ""pit: add EndpointId field in in-record and out-record""",215,271,11,5,1
+9-Sep-19,8,fw: Add Random Forwarding Strategy,286,6,57,21,2
+2-Sep-19,1,mgmt: avoid deprecated KeyLocator::Type enum,2,4,0,5,2
+1-Sep-19,16,fw: various code simplifications in AsfStrategy,291,584,17,5,22
+31-Aug-19,8,rib: change FIB update mocking method,160,238,24,5,47
+29-Aug-19,6,"docs: remove ""Installing from Binaries"" section from INSTALL doc",2,19,11,5,48
+27-Aug-19,27,table: add Fib::afterNewNextHop signal,185,96,78,5,8
+27-Aug-19,1,tests: avoid comparing Interests with operator==,49,40,5,21,55
+23-Aug-19,8,fw: use ndn-cxx's RttEstimator in AccessStrategy,45,278,1,21,7
+14-Aug-19,5,fw: Use ndn-cxx's RttEstimator in AsfStrategy,47,66,86,21,2
+12-Aug-19,5,"Revert ""fib: add EndpointId field in NextHop record""",124,233,43,21,15
+12-Aug-19,6,"Revert ""mgmt: add EndpointId for fib dataset""",1,3,0,21,6
+12-Aug-19,6,"Revert ""tools: display EndpointId in 'nfdc fib list'""",9,32,5,21,4
+22-Jul-19,2,table: rename cs::iterator to cs::Table::const_iterator,90,115,3,5,9
+20-Jul-19,2,face: use ndn-cxx's RttEstimator in LpReliability,45,60,1,21,5
+19-Jul-19,1,rib: make several Rib methods private,27,43,2,5,8
+19-Jul-19,1,ci: add Xcode 11 to Travis CI build matrix,6,3,0,1,2
+19-Jul-19,4,face: move common declarations to face-common.hpp,187,186,0,1,4
+18-Jul-19,28,cs: avoid Entry construction during query,122,362,15,5,4
+15-Jul-19,1,daemon: globally disable automatic verification of Interest parameters digest,21,20,0,5,5
+9-Jul-19,3,"fw: on CS miss, pass ingress with EndpointId=0 to strategy",8,4,0,5,1
+26-Jun-19,6,rib: consolidate RibManager::FaceIdSet into Rib,64,83,2,5,41
+24-Jun-19,1,ci: add gcc-9 to Travis CI build matrix,2,0,0,21,7
+21-Jun-19,17,tools: display EndpointId in 'nfdc fib list',35,12,24,21,3
+18-Jun-19,14,mgmt: add EndpointId for fib dataset,3,1,3,5,2
+26-May-19,1,tools: set CanBePrefix in autoconfig,33,30,0,5,15
+26-May-19,1,tests: add FreshnessPeriod where MustBeFresh is used,3,0,0,5,31
+15-May-19,7,table: drop Selectors processing from PIT,80,139,10,5,6
+14-May-19,7,tests: set CanBePrefix in daemon tests,218,246,9,5,3
+13-May-19,2,pit-fib-benchmark: remove gap4 and simplify,11,15,0,21,1
+8-May-19,3,face: eliminate Transport::Packet wrapper type,355,401,18,5,6
+3-May-19,23,face: add EndpointId in Face and LinkService,243,228,67,5,12
+30-Apr-19,13,table: drop ChildSelector processing in CS,69,128,5,5,1
+29-Apr-19,3,Prepare release 0.6.6,84,7,18,1,1
+26-Apr-19,1,"build: Remove unnecessary std::ref, causing compilation issues with Boost 1.70.0",15,9,4,21,4
+25-Apr-19,4,fw: always create PIT in-records with EndpointId=0 for now,201,66,9,5,2
+22-Apr-19,3,core: move nfd-specific files to daemon/,215,265,202,21,107
+22-Apr-19,5,tests: remove support for unit-tests.conf,22,58,1,5,16
+22-Apr-19,1,ci: adapt to new repo layout for CentOS boost RPMs,4,5,0,1,2
+19-Apr-19,8,table: eliminate Selectors from CS tests,243,455,2,5,2
+16-Apr-19,2,"docs: sync sphinx build config with ndn-cxx, improve README.md",133,235,3,1,7
+16-Apr-19,15,fw: properly handle consumer retransmission in AsfStrategy,255,109,42,1,1
+9-Apr-19,5,"core: move NFD_VERSION{,_BUILD}_STRING to version.cpp",95,54,0,1,1
+3-Apr-19,2,tests: merge DummyFace::LinkService with DummyReceiveLinkService,177,143,0,21,1
+1-Apr-19,1,"face: simplify and optimize Internal{Forwarder,Client}Transport",146,108,0,21,1
+1-Apr-19,2,face: introduce NullTransport and use it in several places,233,170,4,21,47
+1-Apr-19,1,"face: downgrade ""Creating transport"" log message to DEBUG",9,9,0,5,2
+30-Mar-19,1,tests+tools: minor code cleanup,406,446,30,21,1
+28-Mar-19,1,nfd-status-http-server: fix display of satisfied/unsatisfied Interests,2,2,0,5,2
+28-Mar-19,3,"tests: unit-tests-{core,tools} no longer require a global io_service",400,335,4,5,1
+28-Mar-19,3,tests: introduce ClockFixture,196,136,3,5,3
+28-Mar-19,3,tests: IdentityManagementFixture no longer derives from BaseFixture,61,67,10,5,6
+28-Mar-19,4,fw: AccessStrategy: fix PIT in-record lookup with EndpointId,43,63,0,5,2
+23-Mar-19,3,ci: update .travis.yml,16,22,0,21,12
+23-Mar-19,1,face+tools: fix compilation with Boost 1.69.0,25,21,3,1,1
+22-Mar-19,4,mgmt+rib: use getScheduler() in RibManager and Readvertise,35,52,3,1,1
+20-Mar-19,2,"core+daemon: eliminate scheduler::{schedule,cancel} wrappers",338,514,3,1,8
+17-Mar-19,1,face: introduce NullLinkService and use it in makeNullFace(),82,22,0,1,19
+7-Mar-19,15,fw: add FaceEndpoint parameter in Forwarding and Strategy API,523,462,167,5,2
+4-Mar-19,3,mgmt: merge ManagerBase with NfdManagerBase,277,463,2,5,4
+4-Mar-19,4,rib: move RibManager to mgmt,69,68,1,5,1
+25-Feb-19,5,rib: move entire subdir to daemon/rib,117,130,110,5,1
+21-Feb-19,1,table: code modernization,246,418,7,1,15
+21-Feb-19,1,face+table: move EndpointId typedef out of Transport and use it in table,57,56,8,1,12
+21-Feb-19,1,core+main: switch to std::thread and thread_local,59,62,5,1,1
+21-Feb-19,2,build: respect --without-systemd,75,67,4,1,54
+18-Feb-19,1,pit: add EndpointId field in in-record and out-record,272,236,17,5,2
+16-Feb-19,1,Replace nfd::getExtendedErrorMessage with boost::diagnostic_information,44,107,2,1,4
+16-Feb-19,1,Replace all uses of BOOST_THROW_EXCEPTION with NDN_THROW,257,277,1,1,10
+7-Feb-19,1,core: Fix compilation error when privilege drop is not supported,3,3,1,1,12
+5-Feb-19,1,core: use ndn-cxx's getRandomNumberEngine(),15,164,7,5,1
+4-Feb-19,7,Prepare release 0.6.5,60,10,13,1,5
+30-Jan-19,1,build: Upgrade waf build system to version 2.0.14,7,8,0,1,4
+30-Jan-19,1,systemd: allow nfd-status-http-server to bind to any port,2,1,0,5,4
+25-Jan-19,5,fib: add EndpointId field in NextHop record,263,153,133,5,7
+24-Jan-19,6,core: use ndn-cxx scheduler::ScopedEventId,43,246,1,5,3
+18-Jan-19,1,systemd: allow AF_NETLINK in ndn-autoconfig-client.service,1,1,0,1,1
+18-Jan-19,2,systemd: add WantedBy=nfd.service to units that bind to nfd,3,0,3,1,7
+17-Jan-19,18,fw: implement self-learning forwarding strategy,447,12,277,1,1
+16-Jan-19,1,fw: delete deprecated ClientControlStrategy,1,113,0,5,4
+14-Jan-19,5,"systemd: improve nfd.service, add unit files for tools",322,186,11,1,87
+13-Jan-19,3,Add git .mailmap,14,0,3,1,3
+4-Jan-19,1,contrib: remove obsolete upstart files,9,160,4,1,2
+4-Jan-19,1,core: seed the global PRNG with more entropy,5,3,0,1,1
+3-Jan-19,1,tests: don't throw if NetworkMonitor lacks CAP_ENUM,10,21,2,1,2
