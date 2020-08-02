@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 <head>
     <!-- Libraries used: d3.js for creating all charts, bootstrap for buttons and styling -->    	
@@ -7,7 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</head>
 <style>
 
     .line {
@@ -35,7 +35,7 @@
     }
             
 </style>
-<html>
+</head>
     <h2 style="text-align:center;font-family:verdana;">Gerrit Changes Analysis of Named Data Networking Project</h1>
     <br>
     <h3 style="text-align:center;font-family:courier;"> Time Taken For Changes</h2>
