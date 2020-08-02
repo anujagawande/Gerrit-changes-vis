@@ -36,13 +36,14 @@
             
 </style>
 </head>
+<body style="background-color:#FAFBFC;">
     <h2 style="text-align:center;font-family:verdana;">Gerrit Changes Analysis of Named Data Networking Project</h1>
     <br>
     <h3 style="text-align:center;font-family:courier;"> Time Taken For Changes</h2>
     <br>
     <br>
     <p style="margin-left:20px;" >Which changes took most and least time for submission? What day and time were most changes submitted and who contributed most changes?</p>
-    <body style="background-color:#FAFBFC;">
+    
         <div id="div">
             <script>
                 // set the dimensions and margins of the graph
