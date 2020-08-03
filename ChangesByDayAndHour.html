@@ -33,10 +33,12 @@
     }
 </style>
 <html>
-    <h2 style="text-align:center;font-family:verdana;">Gerrit Changes Analysis of Named Data Networking Project</h1>
+    <h2 style="text-align:center;font-family:verdana;">Gerrit 'Changes' Analysis of Named Data Networking Project</h1>
     <br><h3 style="text-align:center;font-family:courier;">Week Day & Hour</h2>
     <br>
     <br>
+    <p style="margin-left:20px;">Gerrit is an open source, code version control tool. A 'Change' in Gerrit represents a single commit under review. Unlike Git, Gerrit does not provide any auto-generated charts for analysis of commits. NDN(Named Data Networking) is a proposed Future Internet architecture research project. 
+    <br>In this visualization, 'Changes' in NDN Gerrit project repository has been analyzed.</p>
     <body style="background-color:#FAFBFC;">
         <div id="div2" display="none">
             <div id="my_dataviz" display="none">
@@ -172,6 +174,30 @@
                             .text("on a Monday during 7th Hour")
                             .style("font-size", "15px")
 
+                        svg.append("line")
+                        .attr("x1", x(13))
+                        .attr("y1", y(4))
+                        .attr("x2", x(23))
+                        .attr("y2", y(4))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
+
+                        svg.append("line")
+                        .attr("x1", x(23))
+                        .attr("y1", y(2))
+                        .attr("x2", x(23))
+                        .attr("y2", y(5))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
+
+                        svg.append("line")
+                        .attr("x1", x(13))
+                        .attr("y1", y(2))
+                        .attr("x2", x(13))
+                        .attr("y2", y(5))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
+
                         svg.append("text")
                         .attr("x", x(13))
                         .attr("y", y(6))
@@ -200,9 +226,10 @@
         <br>
         <div class="container">
             <ul class="pagination .pagination-lg justify-content-center">
+                <li class="page-item"><a class="page-link" href="Index.html">Previous</a></li>
                 <li class="page-item"><a class="page-link" href="IndividualContributions.html">Next</a></li>
             </ul>
         </div>
-        <p align="center">Most changes were submitted on a monday, and during the 7th hour of the day.</p>
+        <p align="center">Most 'changes' were submitted on a monday, and during the 7th hour of the day.</p>
     </body>
 </html>

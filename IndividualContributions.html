@@ -30,17 +30,21 @@
     }
 </style>
 <html>
-    <h2 style="text-align:center;font-family:verdana;">Gerrit Changes Analysis of Named Data Networking Project</h1>
+    <h2 style="text-align:center;font-family:verdana;">Gerrit 'Changes' Analysis of Named Data Networking Project</h1>
     <br>
     <h3 style="text-align:center;font-family:courier;">Individual Contributions<br>by projects</h2>
     <br>
     <br>
+    <p style="margin-left:20px;">Gerrit is an open source, code version control tool. A 'Change' in Gerrit represents a single commit under review. Unlike Git, Gerrit does not provide any auto-generated charts for analysis of commits. 
+    NDN(Named Data Networking) is a proposed Future Internet architecture research project. 
+    <br>In this visualization, 'Changes' in NDN Gerrit project repository has been analyzed.</p>
     <body style="background-color:#FAFBFC;">
          <!-- Buttons for different projects -->
-        <button type="button" class="btn btn-outline-info pull-right" style="margin-left:50px;" onclick="update('NFD')">NFD</button>
+        <p style="margin-left:50px;">Choose a project:
+        <button type="button" class="btn btn-outline-info pull-right" style="margin-left:20px;" onclick="update('NFD')">NFD</button>
         <button type="button" class="btn btn-outline-info" onclick="update('NLSR')">NLSR</button>
         <button type="button" class="btn btn-outline-info" onclick="update('ndncxx')">ndn-cxx</button>
-        
+        </p> 
          <div id="my_dataviz"></div>
          <script>
              // set the dimensions and margins of the graph
@@ -149,12 +153,6 @@
                         .remove()
                 
                         //Annotations
-                        svg.append("text")
-                            .attr("x", x(136))
-                            .attr("y", y(170))
-                            .text("Not all individuals contributed to all projects")
-                            .style("font-size", "15px")
-                        
                         svg.append("text")
                             .attr("x", x(28))
                             .attr("y", y(150))
@@ -305,9 +303,10 @@
         </script>
          <div class="container">
                 <ul class="pagination .pagination-lg justify-content-center">
-                  <li class="page-item"><a class="page-link" href="Index.md">Home</a></li>
+                  <li class="page-item"><a class="page-link" href="ChangesByDayAndHour.html">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="Index.html">Home</a></li>
                 </ul>
         </div>
-        <p align="center">Most changes were submitted on a monday, and during the 7th hour of the day.</p>
+        <p style="margin-left:20px;">This chart breaks down the changes by project within the NDN Gerrit repository. Names have been replaced with ID's provided by Gerrit for every individual. Individual with ID #1 contributed 488 'changes' overall. In NFD, #21 contributed 176 'changes'. In #28 contributed 117 'changes'. In ndn-cxx, #1 contributed 429 'changes'.</p>
     </body>
 </html>

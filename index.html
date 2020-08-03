@@ -37,13 +37,15 @@
 </style>
 </head>
     <body style="background-color:#FAFBFC;">
-    <h2 style="text-align:center;font-family:verdana;">Gerrit Changes Analysis of Named Data Networking Project</h1>
+    <h2 style="text-align:center;font-family:verdana;">Gerrit 'Changes' Analysis of Named Data Networking Project</h1>
     <br>
     <h3 style="text-align:center;font-family:courier;"> Time Taken For Changes</h2>
     <br>
     <br>
-    <p style="margin-left:20px;" >Which changes took most and least time for submission? What day and time were most changes submitted and who contributed most changes?</p>
-  
+    <p style="margin-left:20px;">Gerrit is an open source, code version control tool. A 'Change' in Gerrit represents a single commit under review. Unlike Git, Gerrit does not provide any auto-generated charts for analysis of commits. NDN(Named Data Networking) is a proposed Future Internet architecture research project. <a href="https://gerrit.named-data.net/">NDN Gerrit repo</a>
+    <br>In this visualization, 'Changes' in NDN Gerrit project repository has been analyzed.</p>
+    <h4 style="margin-left:20px;" >Which changes took most and least time for submission?</h4>
+    <p style="margin-left:20px;"> Hover over a dot to see more details about a change</p>
         <div id="div">
             <script>
                 // set the dimensions and margins of the graph
@@ -150,8 +152,24 @@
                     svg.append("text")
                         .attr("x", x(data[37].Date))
                         .attr("y", y(1))
-                        .text("Most Changes took 1 day for submission")
+                        .text("Some Changes took 1 day for submission")
                         .style("font-size", "15px")
+
+                    svg.append("line")
+                        .attr("x1", x(data[28].Date))
+                        .attr("x2", x(data[29].Date))
+                        .attr("y1", y(1))
+                        .attr("y2", y(1))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
+
+                    svg.append("line")
+                        .attr("x1", x(data[37].Date))
+                        .attr("x2", x(data[40].Date))
+                        .attr("y1", y(1))
+                        .attr("y2", y(1))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
                         
                     svg.append("line")
                         .attr("x1", x(data[35].Date))
@@ -180,13 +198,22 @@
                     svg.append("text")
                         .attr("x", x(data[125].Date))
                         .attr("y", y(22))
-                        .text("be merged since date data is")
+                        .text("be merged")
                         .style("font-size", "15px")
-                    svg.append("text")
-                        .attr("x", x(data[125].Date))
-                        .attr("y", y(21))
-                        .text("non-continuous")
-                        .style("font-size", "15px")
+                    svg.append("line")
+                        .attr("x1", x(data[97].Date))
+                        .attr("x2", x(data[110].Date))
+                        .attr("y1", y(5))
+                        .attr("y2", y(22))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
+                    svg.append("line")
+                        .attr("x1", x(data[82].Date))
+                        .attr("x2", x(data[108].Date))
+                        .attr("y1", y(22))
+                        .attr("y2", y(22))
+                        .attr("stroke", "grey")
+                        .attr("stroke-dasharray", "4")
                 });
             </script>
         </div>
@@ -194,18 +221,15 @@
         <br>
         <div class="container">
             <ul class="pagination .pagination-lg justify-content-center">
-                <li class="page-item"><a class="page-link" href="ChangesByDayAndHour.html">Next</a></li>
+                <li class="page-item"><a class="page-link" style="margin-left:20px;" href="ChangesByDayAndHour.html">Next</a></li>
             </ul>
         </div>
-        <p align="center">Gerrit is an open source, code version control tool. A 'Change' in Gerrit represents a single commit under review. Gerrit does not have built in data analysis charts like Git.
-        <br>NDN(Named Data Networking) is a proposed Future Internet architecture research project. 
-        <br>In these 3 charts, 'Changes' in NDN Gerrit project repository has been analyzed.</p>
-        <p align="center">This chart displays days taken for a change from the date it was created till the date it was submitted and merged in master branch.
+        <p style="margin-left:20px;">This chart displays days taken for a 'change' from the date it was created till the date it was submitted and merged in master branch.
         <br> Data displayed is from Jan 2019 - July 2020
-        <br><br> Maximum number of days(29) were taken by Change - <b>face+fw: Store and return PitToken from downstream</b> submitted on <b>25 Sep 2019</b> 
-        <br>33 Changes took 1 day for submission. Other Changes don't have a noticable trend in time taken for submission during this time period. 
+        <br><br> Maximum number of days(29) were taken by 'Change' - <b>face+fw: Store and return PitToken from downstream</b> submitted on <b>25 Sep 2019</b> 
+        <br>33 'Changes' took 1 day for submission. Other 'Changes' don't have a noticable trend in time taken for submission and vary significantly during this time period. 
         </p>
-        <p align="center"><a href="https://gerrit.named-data.net/">NDN Gerrit repo</a></p>
+        <p style="margin-left:20px;"><b>What day and time were these 'changes' submitted and who contributed most changes?</b> Let us explore further to understand.</p>
         
     </body>
 </html>
